@@ -1,0 +1,99 @@
+import findspark
+findspark.init("ur path")
+
+import pyspark
+
+from pyspark.sql import sparksession
+spark = sparksession.builder.master("local[1]") \ .appName('spark_basic') \ .getOrCreate()  //// allocate 
+
+spark
+
+
+RRD -- resilient Distributed Dataset
+
+using parallelize()
+
+sparkcontent has several functions to use with rrds .
+
+code:
+
+dataList = [("sale_1", 20000),("sales_2", 100000),("sales_3",3000)]
+rdd=spark.sparkContent.parallelize(dataList)
+
+type(dataList),type(rdd)
+
+
+RDD TRANSFORMSTIONS
+
+flatMap(),
+map()
+reduceByKey()
+filter()
+sortBykey()
+
+
+RDD ACTIONS:::::::::: 
+
+SOME ACTIONS ;;  count()  collect()  first()
+     max()   reduce()
+
+
+
+using textfile()
+
+code::;
+
+rdd2 = spark.sparkContent.textFile("sample.txt  ur file")
+rdd2.count()
+rdd2.collect()
+
+
+using createDataFrame()
+
+
+code:::
+
+data = [('james','', 'smith','1991-04-01','M',3000),
+        ('Micheal','Rose'','2000-05-19','M',4000),
+       ('james','', 'smith','1991-04-01','M',3000)]
+columns = ["firstname","middlename","lastname","dob","gender","salary"]
+df= spark.createDataFrame(data=data, schema = columns)
+
+df.printschema()
+df.show() //
+df.summary().show()
+
+
+df= spark.read.csv('adult_data.csv',header=True)
+df.show(5) // show only 5 rows
+
+
+num_rows = df.count()
+print(
+
+datadf.describe('age').show()
+datadf.describe('workclass').show()
+datadf.dtypes
+
+
+null_values = datadf.filter(datadf.workclass=="?") //to clean the data
+null_values.show(5)
+
+null_values.count()
+datadf.withcolumn('age',datadf.age+100).show(5)
+
+from pyspark.spl.functions import when
+import numpy as np
+df2 = datadf.withColumn('workclass',when(datadf[""workclass'] == '?', np.NaN).otherwise(datadf[workclass"]))
+df2.show()
+
+df2_exp=datadf.withColumn('workclass',when(datadf["workclass"] == '?' , 'private').otherwise(datadf["workclass"])
+df2_exp.show(5)
+type(np.array(df2))
+df2.show()
+df2.na.fill('private').show(5)
+
+
+
+
+
